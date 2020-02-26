@@ -1,0 +1,10 @@
+Samsung
+Apple
+Nokia
+Sony
+LG
+HTC
+Motorola
+Huawei
+Xiaomi
+Vivo
