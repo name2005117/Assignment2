@@ -1,0 +1,12 @@
+ID: 1
+Topic: animals
+Connection: tcp://10.0.0.1:5556
+Receive from broker 
+Topic: animals
+Content:Abyssinian
+Receive from broker 
+Topic: animals
+Content:Afghan Houn
+Receive from broker 
+Topic: animals
+Content:Affenpinscher

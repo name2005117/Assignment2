@@ -1,0 +1,15 @@
+Init Broker succeed 
+5555! 
+5556! 
+PUB-Init msg: 2 init with topic animals
+Pub No.2 published Aardvark with topic animals
+PUB-Init msg: 5 init with topic animals
+Pub No.2 published Abyssinian with topic animals
+Pub No.2 published Adelie Penguin with topic animals
+Pub No.2 published Affenpinscher with topic animals
+Pub No.2 published Afghan Houn with topic animals
+Pub No.5 published Aardvark with topic animals
+Pub No.5 published Abyssinian with topic animals
+Pub No.5 published Adelie Penguin with topic animals
+Pub No.5 published Affenpinscher with topic animals
+Pub No.5 published Afghan Houn with topic animals
