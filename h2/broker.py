@@ -220,9 +220,7 @@ def sync_data(broker):
         except:
             print('Time out')
             continue
-            
-        print(msg)
-        msg
+           
         if msg[0]=='init':
             dict_update(msg, broker.pubdict, broker.publisher)
         elif msg[0]=='publish':
