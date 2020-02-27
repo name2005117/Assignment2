@@ -103,7 +103,7 @@ class broker_lib:
 
         self.leader_flag = True
         #self.start_broker()
-        #self.syncsocket = None
+        self.syncsocket.close()
         self.pubsyncsocket = self.sourcepush('5557')
         if self.pubsyncsocket != None:
             print('Broker %s started sending msg' % self.ID)
