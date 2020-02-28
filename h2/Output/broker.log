@@ -1,37 +1,51 @@
 Init Broker succeed 
 5555! 
 5556! 
-PUB-Init msg: 1 init with topic animals
-PUB-Init msg: 1 init with topic animals
-Pub No.1 published Aardvark with topic animals
-Pub No.1 published Aardvark with topic animals
-Pub No.1 published Abyssinian with topic animals
-Pub No.1 published Abyssinian with topic animals
-Reply to SUB 2  with topic animals
-Reply to SUB 2  with topic animals
-Reply to SUB 2  with topic animals
-Pub No.1 published Adelie Penguin with topic animals
-Pub No.1 published Adelie Penguin with topic animals
-Pub No.1 published Affenpinscher with topic animals
-Pub No.1 published Affenpinscher with topic animals
-Reply to SUB 2  with topic animals
-Reply to SUB 2  with topic animals
-Pub No.1 published Afghan Hound with topic animals
-Pub No.1 published Afghan Hound with topic animals
-Pub No.1 published American Bulldog with topic animals
-Pub No.1 published American Bulldog with topic animals
-Reply to SUB 2  with topic animals
-Reply to SUB 2  with topic animals
-Reply to SUB 2  with topic animals
-Pub No.1 published American Cocker Spaniel with topic animals
-Pub No.1 published American Cocker Spaniel with topic animals
-PUB-Init msg: 1 init with topic animals
-Pub No.1 published American Coonhound with topic animals
-Pub No.1 published American Eskimo Dog with topic animals
-Pub No.1 published American Foxhound with topic animals
-Pub No.1 published American Pit Bull Terrier with topic animals
-Pub No.1 published American Staffordshire Terrier with topic animals
-Pub No.1 published American Water Spaniel with topic animals
-Pub No.1 published Anatolian Shepherd Dog with topic animals
-Pub No.1 published Angelfish with topic animals
-Pub No.1 published Ant with topic animals
+PUB-Init msg: 7 init with topic animals
+PUB-Init msg: 7 init with topic animals
+Pub No.7 published Aardvark with topic animals
+Pub No.7 published Aardvark with topic animals
+Reply to SUB 5  with topic animals
+Reply to SUB 5  with topic animals
+Pub No.7 published Abyssinian with topic animals
+Pub No.7 published Abyssinian with topic animals
+Pub No.7 published Adelie Penguin with topic animals
+Pub No.7 published Adelie Penguin with topic animals
+Reply to SUB 5  with topic animals
+Pub No.7 published Affenpinscher with topic animals
+Pub No.7 published Affenpinscher with topic animals
+Pub No.7 published Afghan Hound with topic animals
+Pub No.7 published Afghan Hound with topic animals
+Reply to SUB 5  with topic animals
+Reply to SUB 5  with topic animals
+Reply to SUB 5  with topic animals
+Pub No.7 published American Bulldog with topic animals
+Pub No.7 published American Bulldog with topic animals
+Pub No.7 published American Cocker Spaniel with topic animals
+Pub No.7 published American Cocker Spaniel with topic animals
+Reply to SUB 5  with topic animals
+Pub No.7 published American Coonhound with topic animals
+Pub No.7 published American Coonhound with topic animals
+Pub No.7 published American Eskimo Dog with topic animals
+Pub No.7 published American Eskimo Dog with topic animals
+Reply to SUB 5  with topic animals
+Reply to SUB 5  with topic animals
+Reply to SUB 5  with topic animals
+Pub No.7 published American Foxhound with topic animals
+Pub No.7 published American Foxhound with topic animals
+Pub No.7 published American Pit Bull Terrier with topic animals
+Pub No.7 published American Pit Bull Terrier with topic animals
+Reply to SUB 5  with topic animals
+Pub No.7 published American Staffordshire Terrier with topic animals
+Pub No.7 published American Staffordshire Terrier with topic animals
+Pub No.7 published American Water Spaniel with topic animals
+Pub No.7 published American Water Spaniel with topic animals
+PUB-Init msg: 7 init with topic animals
+Pub No.7 published Anatolian Shepherd Dog with topic animals
+Pub No.7 published Angelfish with topic animals
+Pub No.7 published Ant with topic animals
+Pub No.7 published Anteater with topic animals
+Pub No.7 published Antelope with topic animals
+Pub No.7 published Appenzeller Dog with topic animals
+Pub No.7 published Arctic Fox with topic animals
+Pub No.7 published Arctic Hare with topic animals

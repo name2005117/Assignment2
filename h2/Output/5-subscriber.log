@@ -6,7 +6,13 @@ Topic: animals
 Content:Aardvark
 Receive from broker 
 Topic: animals
+Content:Abyssinian
+Receive from broker 
+Topic: animals
 Content:Adelie Penguin
 Receive from broker 
 Topic: animals
-Content:Abyssinian
+Content:American Eskimo Dog
+Receive from broker 
+Topic: animals
+Content:American Coonhound

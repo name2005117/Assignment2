@@ -111,7 +111,7 @@ class broker_lib:
 
         self.leader_flag = True
         #self.start_broker()
-        self.syncsocket.close()
+        #self.syncsocket = None
         self.pubsyncsocket = self.sourcepush('5557')
         if self.pubsyncsocket != None:
             print('Broker %s started sending msg' % self.ID)
@@ -130,7 +130,6 @@ class broker_lib:
         socket.bind("tcp://*" + ':' + port)
         socket.setsockopt(zmq.SNDTIMEO, 3000)
         socket.setsockopt(zmq.RCVTIMEO, 3000)
-        
         return socket
 
 

@@ -71,6 +71,8 @@ class Publisher:
 
         @self.zk.DataWatch(path=leader_path)
         def watch_leader(data, state):
+            print('***** watch leader *****')
+
             print("pub found leader change " + str(data) + " " + str(state))
             print('Broker in Leader Znode is: %s' % data)
             if state is None:

@@ -124,15 +124,14 @@ def main():
 
     msg22 = myRead(msg2)
     
-    if broker.pubsyncsocket != None:
+    while broker.pubsyncsocket != None:
         print('*******')
-        while True:
-            try:
-                broker.pubsyncsocket.send_string(msg2)
-                break
-            except Exception as ex:
-                print("failed to send sync " + str(ex))
-                continue
+        try:
+            broker.pubsyncsocket.send_string(msg2)
+            break
+        except Exception as ex:
+            print("failed to send sync " + str(ex))
+            continue
     
     sdict_update(msg22,broker.subdict, broker.subscriber)
     subsocket.send_string('SUB-BROKER has been connected')
@@ -248,7 +247,9 @@ def sync_data(broker):
         except:
             print('Time out')
             continue
-           
+            
+        print(msg)
+        msg
         if msg[0]=='init':
             dict_update(msg, broker.pubdict, broker.publisher)
         elif msg[0]=='publish':
