@@ -51,7 +51,7 @@ def main():
     
     # elect the leader under the path /Leader
     leader_path = '/Leader'
-        
+
     if broker.zk.exists(leader_path):
         # If the leader znode already exists, set the flag=false, specify broker to be the follower
         broker.leader_flag = False
@@ -89,34 +89,54 @@ def main():
     
     
     # we first register all the pub and sub
-    msg1 = pubsocket.recv_string()
+    while True:
+        try:
+            msg1 = pubsocket.recv_string()
+            print("recved msg: " + msg1)
+            break
+        except Exception as ex:
+            print("fail to recv init msg " + str(ex))
+            time.sleep(1)
     
-    if broker.pubsyncsocket != None:
+    while broker.pubsyncsocket != None:
         
-        broker.pubsyncsocket.send_string(msg1)
-        print('-----')
+        try:
+            broker.pubsyncsocket.send_string(msg1)
+            print('-----')
+            break
+        except Exception as ex:
+            print("failed to send sync " + str(ex))
+            if len(broker.zk.get_children('/Brokers/')) <= 1:
+                broker.pubsyncsocket = None
+
     
-    msg11 = read(msg1)
+    msg11 = myRead(msg1)
     
+    print("read val " + str(msg11))
     dict_update(msg11,broker.pubdict, broker.publisher)
     pubsocket.send_string('PUB-Info has been received!')
+    print("sent confirm msg")
     #broker.syncsocket.send_string(msg1.encode('utf-8'))
     
     #pubsocket.send_string("Please send me the publisher \n")
 
     msg2 = subsocket.recv_string()
 
-    msg22 = read(msg2)
+    msg22 = myRead(msg2)
     
     if broker.pubsyncsocket != None:
         print('*******')
-        broker.pubsyncsocket.send_string(msg2)
+        while True:
+            try:
+                broker.pubsyncsocket.send_string(msg2)
+                break
+            except Exception as ex:
+                print("failed to send sync " + str(ex))
+                continue
     
     sdict_update(msg22,broker.subdict, broker.subscriber)
     subsocket.send_string('SUB-BROKER has been connected')
     #broker.syncsocket.send_string(msg2.encode('utf-8'))
-    
-
     pub_thread = threading.Thread(target=pub_service, args=(broker,))
     sub_thread = threading.Thread(target=sub_service, args=(broker,))
     
@@ -172,9 +192,17 @@ def main():
 def pub_service(broker):
     while True:
         message = broker.pubsocket.recv_string()
-        msg=read(message)
+        msg=myRead(message)
         #broker.syncsocket.send_string(msg.encode('utf-8'))
-        broker.pubsyncsocket.send_string(message)
+        if broker.pubsyncsocket is not None:
+            while True:
+                try:
+                    broker.pubsyncsocket.send_string(message)
+                    break
+                except Exception as ex:
+                    print("failed to send sync " + str(ex))
+                    continue
+
         # add the coming info to the dict
         dict_update(msg, broker.pubdict, broker.publisher)
         # reply to pub that this process is done
@@ -184,7 +212,7 @@ def sub_service(broker):
     
     while True:
         message = broker.subsocket.recv_string()
-        msg = read(message)
+        msg = myRead(message)
         sdict_update(msg, broker.subdict, broker.subscriber)
             
         if msg[0] == 'ask':
@@ -214,7 +242,7 @@ def sync_data(broker):
     while broker.leader_flag is False:
         print('\n************************************\n')
         try:
-            msg = read(broker.syncsocket.recv_string())
+            msg = myRead(broker.syncsocket.recv_string())
             
             # we got msg from leader
         except:
@@ -237,7 +265,7 @@ def sync_data(broker):
         
 
 
-def read(msg):
+def myRead(msg):
     info = msg.split('#')
     return info
 

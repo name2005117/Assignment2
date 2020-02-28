@@ -1,3 +1,15 @@
 ID: 3
-Topic: foods
+Topic: animals
 Connection: tcp://10.0.0.1:5556
+Receive from broker 
+Topic: animals
+Content:Aardvark
+Receive from broker 
+Topic: animals
+Content:Adelie Penguin
+Receive from broker 
+Topic: animals
+Content:Abyssinian
+Receive from broker 
+Topic: animals
+Content:Afghan Hound

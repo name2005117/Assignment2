@@ -3,10 +3,88 @@ Topic: animals
 Connection: tcp://10.0.0.1:5556
 Receive from broker 
 Topic: animals
+Content:Aardvark
+Receive from broker 
+Topic: animals
+Content:Adelie Penguin
+Receive from broker 
+Topic: animals
 Content:Abyssinian
 Receive from broker 
 Topic: animals
-Content:Afghan Houn
+Content:American Bulldog
 Receive from broker 
 Topic: animals
 Content:Affenpinscher
+Receive from broker 
+Topic: animals
+Content:Afghan Hound
+Receive from broker 
+Topic: animals
+Content:American Pit Bull Terrier
+Receive from broker 
+Topic: animals
+Content:American Coonhound
+Receive from broker 
+Topic: animals
+Content:American Foxhound
+Receive from broker 
+Topic: animals
+Content:Ant
+Receive from broker 
+Topic: animals
+Content:Anatolian Shepherd Dog
+Receive from broker 
+Topic: animals
+Content:Angelfish
+Receive from broker 
+Topic: animals
+Content:American Water Spaniel
+Receive from broker 
+Topic: animals
+Content:Armadillo
+Receive from broker 
+Topic: animals
+Content:Asian Elephant
+Receive from broker 
+Topic: animals
+Content:Asian Giant Hornet
+Receive from broker 
+Topic: animals
+Content:Arctic Wolf
+Receive from broker 
+Topic: animals
+Content:Anteater
+Receive from broker 
+Topic: animals
+Content:American Cocker Spaniel
+Receive from broker 
+Topic: animals
+Content:American Staffordshire Terrier
+Receive from broker 
+Topic: animals
+Content:Asiatic Black Bear
+Receive from broker 
+Topic: animals
+Content:Australian Mist
+Receive from broker 
+Topic: animals
+Content:Arctic Hare
+Receive from broker 
+Topic: animals
+Content:Australian Kelpie Dog
+Receive from broker 
+Topic: animals
+Content:Australian Cattle Dog
+Receive from broker 
+Topic: animals
+Content:Aye Aye
+Receive from broker 
+Topic: animals
+Content:Australian Terrier
+Receive from broker 
+Topic: animals
+Content:Australian Shepherd
+Receive from broker 
+Topic: animals
+Content:American Eskimo Dog

@@ -11,16 +11,15 @@ import zmq
 from kazoo.client import *
 #from multiprocessing import Process
 
-class Pub_Info:
 
-    # we define the publisher with borker_address, port and the topic it has
-    
+class Publisher:
     def __init__(self, zookeeper, port, topic):
 
         self.address = zookeeper
         server_address = zookeeper + ':2181'
         self.zk = KazooClient(hosts=server_address)
-        
+        if self.zk.state != KazooState.CONNECTED:
+            self.zk.start()
         self.port = port
         self.topic = topic
         self.Connected = False
@@ -31,15 +30,18 @@ class Pub_Info:
         self.path = None
         self.file = None
         self.list = []
-        self.init()
+        self.msgIndex = 0
         #self.Thread() = None
         
     
     def init(self):
-        if self.zk.state != KazooState.CONNECTED:
+        # self.zk = KazooClient(hosts=self.address + ':2181')
+        while self.zk.state != KazooState.CONNECTED:
+            print("current state is " + self.zk.state)
             self.zk.start()
     
         while self.zk.state != KazooState.CONNECTED:
+            time.sleep(1)
             pass
         print('Pub %s connected to local ZooKeeper Server.' % self.ID)
 
@@ -64,17 +66,12 @@ class Pub_Info:
             print('Pub %s connected with leader' % self.ID)
             self.Connected = True
 
-    
-
-        
-    
-
         print('PUB ID:', self.ID)
 
-        
 
         @self.zk.DataWatch(path=leader_path)
         def watch_leader(data, state):
+            print("pub found leader change " + str(data) + " " + str(state))
             print('Broker in Leader Znode is: %s' % data)
             if state is None:
                 self.Connected = False
@@ -87,12 +84,12 @@ class Pub_Info:
                     print('pub %s connected with new leader' % self.ID)
                     #self.socket = None
                     self.Connected = True
-                    time.sleep(5)
-                    threading.Thread(target=self.publish1(), args=()).start()
+                    time.sleep(2)
+                    thr = self.get_pub_thread()
+                    thr.start()
+
         
-        
-    
-    
+
     def register_pub(self):
 
         print('Publisher NO. %s with %s.' % (self.ID, self.topic))
@@ -101,6 +98,10 @@ class Pub_Info:
         connection = "tcp://" + self.Broker_IP + ":5555"
         context = zmq.Context()
         self.socket = context.socket(zmq.REQ)
+        # self.socket.setsockopt(zmq.LINGER, 5)
+        self.socket.setsockopt(zmq.RCVTIMEO, 2000)
+        self.socket.setsockopt(zmq.SNDTIMEO, 2000)
+
         current = time.time()
         
         while (time.time() - current < 5):
@@ -113,36 +114,93 @@ class Pub_Info:
             print('Connection succeed!')
             message = 'init' + '#' + self.ID + '#' + self.topic + '#'
             # send the message
-            self.socket.send_string( message )
 
-            
+            while True:
+                try:
+                    res = self.socket.send_string( message )
+                    print(res)
+                    break
+                except Exception as ex:
+                    print("failed to register " + ex)
+                time.sleep(1)
 
-            recv_msg = self.socket.recv_string()
+            while True:
+                try:
+                    recv_msg = self.socket.recv_string()
+                    if recv_msg is not None:
+                        break
+                except Exception as ex:
+                    print("failed to recv reg confirm " + str(ex))
+                time.sleep(1)
 
             print(recv_msg)
-            
             return True
-                
-    def publish1(self):
-        try:
-            with open(self.file, 'a') as logfile:
-                for p in self.list:
-                    logfile.write('*************************************************\n')
+
+
+    def get_pub_thread(self):
+        def publishing():
+            print("**** a new publishing thread ****")
+            myBrokerIp = self.Broker_IP
+            try:
+                with open(self.file, 'a') as logfile:
+                    for p in self.list[self.msgIndex:]:
+                        logfile.write('*************************************************\n')
                     
-                    logfile.write('Publish Info: %s \n'% self.topic)
-                    logfile.write('Publish: %s\n' % p)
-                    logfile.write('Time: %s\n' % str(time.time()))
-                    sending = 'publish' + '#' + self.ID + '#' + self.topic + '#' + p
+                        logfile.write('Publish Info: %s \n'% self.topic)
+                        logfile.write('Publish: %s\n' % p)
+                        logfile.write('Time: %s\n' % str(time.time()))
+                        sending = 'publish' + '#' + self.ID + '#' + self.topic + '#' + p
 
-                    self.socket.send_string(sending)
-                    #print(sending)
 
-                    rcv_msg = self.socket.recv_string()
-                    print(rcv_msg)
-                    time.sleep(1)
-                self.socket.close()
-        except IOError:
-            print('Open or write file error.')
+                        while True:
+                            try:
+                                self.socket.send_string(sending)
+                                break
+                            except Exception as ex:
+
+                                print('failed to send msg ' + str(ex))
+                                try:
+                                    curBroker = self.zk.get("Leader")[0].decode("utf-8")
+                                    if curBroker != myBrokerIp:
+                                        print("gracefully exit the thread")
+                                        exit(0)
+                                except Exception as ex:
+                                    print(ex)
+                            time.sleep(1)
+
+                        while True:
+                            try:
+                                rcv_msg = self.socket.recv_string()
+                                print("recieved msg:" + rcv_msg)
+                                break
+                            except Exception as ex:
+                
+                                try:
+                                    print('failed to recv msg ' + str(ex))
+                                    curBroker = self.zk.get("Leader")[0].decode("utf-8")
+                                    if curBroker != myBrokerIp:
+                                        print("gracefully exit the thread")
+                                        exit(0)
+                                except Exception as ex:
+                                    print(str(ex))
+                            time.sleep(1)
+
+                        self.msgIndex += 1
+
+
+                        time.sleep(1)
+                    self.socket.close()
+            except IOError:
+                print('Open or write file error.')
+
+        return threading.Thread(target=publishing, args=())
+    
+
+    def start(self):
+        self.init()
+        thr = self.get_pub_thread()
+        thr.start()
+        # thr.join()
     
     
 
@@ -165,23 +223,23 @@ def parseCmdLineArgs ():
 	# registation finished
     #the_socket.close()
     
-def publish(pub):
-        try:
-            with open(pub.file, 'a') as logfile:
-                for p in pub.list:
-                    logfile.write('*************************************************\n')
+# def publish(pub):
+#         try:
+#             with open(pub.file, 'a') as logfile:
+#                 for p in pub.list:
+#                     logfile.write('*************************************************\n')
                     
-                    logfile.write('Publish Info: %s \n'% pub.topic)
-                    logfile.write('Publish: %s\n' % p)
-                    logfile.write('Time: %s\n' % str(time.time()))
-                    sending = 'publish' + '#' + pub.ID + '#' + pub.topic + '#' + p
-                    pub.socket.send_string(sending)
-                    rcv_msg = pub.socket.recv_string()
-                    print(rcv_msg)
-                    time.sleep(1)
-                pub.socket.close()
-        except IOError:
-            print('Open or write file error.')
+#                     logfile.write('Publish Info: %s \n'% pub.topic)
+#                     logfile.write('Publish: %s\n' % p)
+#                     logfile.write('Time: %s\n' % str(time.time()))
+#                     sending = 'publish' + '#' + pub.ID + '#' + pub.topic + '#' + p
+#                     pub.socket.send_string(sending)
+#                     rcv_msg = pub.socket.recv_string()
+#                     print(rcv_msg)
+#                     time.sleep(1)
+#                 pub.socket.close()
+#         except IOError:
+#             print('Open or write file error.')
 
 
 def get_publications(file_path):
@@ -209,7 +267,7 @@ def main():
     topic = topics[1]
 
     # we first init the publish server and connect with the zookeeper
-    pub = Pub_Info(zoo_address,'5555',topic)
+    pub = Publisher(zoo_address,'5555',topic)
 
     
     
@@ -217,7 +275,7 @@ def main():
     socket = pub.socket
     '''
     # wait for the registation complete
-    time.sleep(5)
+    time.sleep(2)
     
     # we find the path for the topic
     '''pub.path = './Input/'+ topic + '.txt'
@@ -239,7 +297,7 @@ def main():
     
     pubsocket.connect("tcp://" + baddress + ":5555")'''
     pub.file = './Output/' + pub.ID + '-publisher.log'
-    threading.Thread(target=publish(pub), args=()).start()
+    pub.start()
     #wait()
 
 

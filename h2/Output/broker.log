@@ -1,15 +1,37 @@
 Init Broker succeed 
 5555! 
 5556! 
-PUB-Init msg: 2 init with topic animals
-Pub No.2 published Aardvark with topic animals
-PUB-Init msg: 5 init with topic animals
-Pub No.2 published Abyssinian with topic animals
-Pub No.2 published Adelie Penguin with topic animals
-Pub No.2 published Affenpinscher with topic animals
-Pub No.2 published Afghan Houn with topic animals
-Pub No.5 published Aardvark with topic animals
-Pub No.5 published Abyssinian with topic animals
-Pub No.5 published Adelie Penguin with topic animals
-Pub No.5 published Affenpinscher with topic animals
-Pub No.5 published Afghan Houn with topic animals
+PUB-Init msg: 1 init with topic animals
+PUB-Init msg: 1 init with topic animals
+Pub No.1 published Aardvark with topic animals
+Pub No.1 published Aardvark with topic animals
+Pub No.1 published Abyssinian with topic animals
+Pub No.1 published Abyssinian with topic animals
+Reply to SUB 2  with topic animals
+Reply to SUB 2  with topic animals
+Reply to SUB 2  with topic animals
+Pub No.1 published Adelie Penguin with topic animals
+Pub No.1 published Adelie Penguin with topic animals
+Pub No.1 published Affenpinscher with topic animals
+Pub No.1 published Affenpinscher with topic animals
+Reply to SUB 2  with topic animals
+Reply to SUB 2  with topic animals
+Pub No.1 published Afghan Hound with topic animals
+Pub No.1 published Afghan Hound with topic animals
+Pub No.1 published American Bulldog with topic animals
+Pub No.1 published American Bulldog with topic animals
+Reply to SUB 2  with topic animals
+Reply to SUB 2  with topic animals
+Reply to SUB 2  with topic animals
+Pub No.1 published American Cocker Spaniel with topic animals
+Pub No.1 published American Cocker Spaniel with topic animals
+PUB-Init msg: 1 init with topic animals
+Pub No.1 published American Coonhound with topic animals
+Pub No.1 published American Eskimo Dog with topic animals
+Pub No.1 published American Foxhound with topic animals
+Pub No.1 published American Pit Bull Terrier with topic animals
+Pub No.1 published American Staffordshire Terrier with topic animals
+Pub No.1 published American Water Spaniel with topic animals
+Pub No.1 published Anatolian Shepherd Dog with topic animals
+Pub No.1 published Angelfish with topic animals
+Pub No.1 published Ant with topic animals

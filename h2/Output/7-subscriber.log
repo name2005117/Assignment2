@@ -3,13 +3,13 @@ Topic: animals
 Connection: tcp://10.0.0.1:5556
 Receive from broker 
 Topic: animals
-Content:Affenpinscher
-Receive from broker 
-Topic: animals
 Content:Aardvark
 Receive from broker 
 Topic: animals
-Content:Adelie Penguin
+Content:Abyssinian
 Receive from broker 
 Topic: animals
-Content:Afghan Houn
+Content:Affenpinscher
+Receive from broker 
+Topic: animals
+Content:Adelie Penguin

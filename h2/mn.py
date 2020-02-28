@@ -22,6 +22,8 @@ from mininet.node import Controller, RemoteController
 # This is our topology class created specially for Mininet
 from Stopology import Stopo
 
+zKServer = '~/Documents/apache-zookeeper-3.5.7-bin/bin/zkServer.sh'
+
 def parseCmdLineArgs ():
     # parse the command line
     parser = argparse.ArgumentParser ()
@@ -40,11 +42,11 @@ def Test(pubHosts, subHosts, brokerHost, zookeeper):
     try:
         # first, we initate zookeeper server
         def zk_op():
-            start_command = 'sudo xterm -hold -e /home/shuang/zookeeper-3.5.5/bin/zkServer.sh start'
+            start_command = 'sudo xterm -hold -e ' + zKServer + ' start'
             zookeeper.cmd(start_command)
         
         threading.Thread(target=zk_op, args=()).start()
-        time.sleep(5)
+        time.sleep(1)
         print ('zookeeper is ready')
         print(zookeeper.IP())
         # then we set up brokers pus and subs
@@ -60,7 +62,7 @@ def Test(pubHosts, subHosts, brokerHost, zookeeper):
                     
             threading.Thread(target=bk_op, args=()).start()
             
-            time.sleep(5)
+            time.sleep(1)
         
         print ('broker is ready')
         
@@ -75,7 +77,7 @@ def Test(pubHosts, subHosts, brokerHost, zookeeper):
             
             threading.Thread(target=pub_op, args=()).start()
             
-            time.sleep(5)
+            time.sleep(1)
         
         print ('Pubs are ready')
 
@@ -86,7 +88,7 @@ def Test(pubHosts, subHosts, brokerHost, zookeeper):
                 sub.cmd(command2)
             
             threading.Thread(target=sub_op, args=()).start()
-            time.sleep(5)
+            time.sleep(1)
         
         print ('Subs are ready')
 

@@ -3,6 +3,7 @@
 import zmq
 import time
 import random
+# import kazoo
 from kazoo.client import KazooState
 from kazoo.client import KazooClient
 
@@ -41,6 +42,9 @@ class broker_lib:
         # we use REQ and REP to manage between publisher and broker
         context = zmq.Context()
         p_socket = context.socket(zmq.REP)
+        p_socket.setsockopt(zmq.RCVTIMEO, 3000)
+        p_socket.setsockopt(zmq.SNDTIMEO, 3000)
+
         p_socket.bind('tcp://*:'+ port)
         with open(log_file, 'a') as logfile:
             logfile.write('5555! \n')
@@ -89,7 +93,7 @@ class broker_lib:
 
             if self.zk.exists(path=leader_path) is None:
 
-                time.sleep(random.randint(0, 3))
+                # time.sleep(random.randint(0, 3))
                 election = self.zk.Election(election_path, self.ID)
                 election.run(self.win_election)
     
@@ -97,7 +101,11 @@ class broker_lib:
         print("Win election")
         leader_path = '/Leader'
         if self.zk.exists(path=leader_path) is None:
-            self.zk.create(leader_path, value=self.IP.encode('utf-8'), ephemeral=True, makepath=True)
+            try:
+                self.zk.create(leader_path, value=self.IP.encode('utf-8'), ephemeral=True, makepath=True)
+            except Exception as ex:
+                print("shouldn't elect")
+
         while self.zk.exists(path=leader_path) is None:
             pass
 
@@ -120,6 +128,9 @@ class broker_lib:
         context = zmq.Context()
         socket = context.socket(zmq.PUSH)
         socket.bind("tcp://*" + ':' + port)
+        socket.setsockopt(zmq.SNDTIMEO, 3000)
+        socket.setsockopt(zmq.RCVTIMEO, 3000)
+        
         return socket
 
 

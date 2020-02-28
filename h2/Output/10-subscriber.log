@@ -1,3 +1,27 @@
 ID: 10
 Topic: animals
-Connection: tcp://localhost:5556
+Connection: tcp://10.0.0.1:5556
+Receive from broker 
+Topic: animals
+Content:Aardvark
+Receive from broker 
+Topic: animals
+Content:Adelie Penguin
+Receive from broker 
+Topic: animals
+Content:Affenpinscher
+Receive from broker 
+Topic: animals
+Content:Abyssinian
+Receive from broker 
+Topic: animals
+Content:American Bulldog
+Receive from broker 
+Topic: animals
+Content:American Pit Bull Terrier
+Receive from broker 
+Topic: animals
+Content:American Cocker Spaniel
+Receive from broker 
+Topic: animals
+Content:American Staffordshire Terrier
